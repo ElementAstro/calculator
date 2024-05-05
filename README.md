@@ -33,6 +33,8 @@ int main() {
     std::cout << "Result: " << result << std::endl;
 
     try {
+        // Try evaluating the expression with an integer result
+        // But this will throw an exception because the parameters are not an integer
         std::string expr2 = "12.34 + 56.78";
         int result2 = calculator::eval<int>(expr2);
         std::cout << "Result: " << result2 << std::endl;

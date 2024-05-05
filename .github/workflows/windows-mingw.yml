@@ -44,6 +44,7 @@ jobs:
           base-devel
           mingw-w64-${{matrix.env}}-cmake
           mingw-w64-${{matrix.env}}-gcc
+          mingw-w64-${{matrix.env}}-gtest
 
     - name: Checkout repository
       uses: actions/checkout@v3
