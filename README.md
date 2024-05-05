@@ -43,13 +43,6 @@ int main() {
 }
 ```
 
-Output:
-
-```txt
-Result: 14
-Integer Result: 12
-```
-
 ## Supported Operations
 
 The calculator supports the following operations:
