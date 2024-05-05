@@ -1,0 +1,45 @@
+cmake_minimum_required(VERSION 3.20)
+project(calculator VERSION 1.0.0 LANGUAGES CXX)
+
+option(BUILD_TESTS "Build tests" ON)
+option(BUILD_EXAMPLES "Build examples" ON)
+option(BUILD_BENCHMARKS "Build benchmarks" ON)
+
+if(NOT CMAKE_CXX_STANDARD)
+    set(CMAKE_CXX_STANDARD 17)
+    set(CMAKE_CXX_STANDARD_REQUIRED ON)
+endif()
+
+add_library(calculator INTERFACE)
+target_include_directories(calculator INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS "8.0.0")
+        message(FATAL_ERROR "GCC/Clang version must be at least 8.0.0")
+    endif()
+elseif(MSVC)
+    if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS "19.0.0")
+        message(FATAL_ERROR "MSVC version must be at least 19.0.0")
+    endif()
+endif()
+
+install(FILES calculator.hpp DESTINATION calculator)
+
+if (BUILD_EXAMPLES)
+    add_executable(example example/main.cpp)
+    target_link_libraries(example PRIVATE calculator)
+endif()
+
+if (BUILD_TESTS)
+    enable_testing()
+    find_package(GTest REQUIRED)
+    add_executable(calc_test test/main.cpp)
+    target_link_libraries(calc_test PRIVATE calculator GTest::gtest)
+    add_test(NAME CalcTest COMMAND calc_test)
+endif()
+
+if (BUILD_BENCHMARKS)
+    find_package(benchmark REQUIRED)
+    add_executable(benchmark benchmark/main.cpp)
+    target_link_libraries(benchmark PRIVATE calculator benchmark::benchmark)
+endif()
