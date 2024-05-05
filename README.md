@@ -1,5 +1,10 @@
 # Modern C++ Calculator
 
+[![CodeQL](https://github.com/ElementAstro/calculator/actions/workflows/codeql.yml/badge.svg)](https://github.com/ElementAstro/calculator/actions/workflows/codeql.yml)
+[![MinGW](https://github.com/ElementAstro/calculator/actions/workflows/windows-mingw.yml/badge.svg)](https://github.com/ElementAstro/calculator/actions/workflows/windows-mingw.yml)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=ElementAstro_calculator&metric=bugs)](https://sonarcloud.io/summary/new_code?id=ElementAstro_calculator)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=ElementAstro_calculator&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=ElementAstro_calculator)
+
 This is a modern C++ implementation of a calculator that can evaluate mathematical expressions. It supports various arithmetic operations, bitwise operations, and follows the standard order of operations.
 
 > [!IMPORTANT]
