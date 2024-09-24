@@ -1,19 +1,18 @@
-/*
- * calculator.hpp
+/**
+ * @file calculator.hpp
+ * @brief A calculator implementation under C++20
+ * @date 2024-09-24
+ * @author Max Qian
+ * @copyright Copyright (C) 2023-2024 Max Qian <lightapt.com>
  *
- * Copyright (C) 2023-2024 Max Qian <lightapt.com>
+ * This file contains the implementation of a calculator that can evaluate
+ * mathematical expressions. It supports various operators including bitwise,
+ * arithmetic, and exponentiation. The calculator is implemented using templates
+ * to support different numeric types.
  */
 
-/*************************************************
-
-Date: 2023-4-5
-
-Description: A calculator implementation under C++20
-
-**************************************************/
-
-#ifndef ATOM_ALGORITHM_CALCULATOR_HPP
-#define ATOM_ALGORITHM_CALCULATOR_HPP
+#ifndef CALCULATOR_HPP
+#define CALCULATOR_HPP
 
 #include <cctype>
 #include <cmath>
