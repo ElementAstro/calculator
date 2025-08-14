@@ -435,7 +435,7 @@ jobs:
         compiler: [gcc, clang, msvc]
         
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     
     - name: Configure CMake
       run: cmake -B build -DBUILD_TESTS=ON

@@ -1,0 +1,34 @@
+name: CI (Windows MSVC)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        build_type: [Release]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure (CMake - MSVC)
+        run: |
+          cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTS=OFF -DBUILD_EXAMPLES=ON -DBUILD_BENCHMARKS=OFF
+
+      - name: Build
+        run: |
+          cmake --build build --config ${{ matrix.build_type }} --parallel
+
+  # GoogleTest isn't preinstalled on windows-latest (MSVC); tests are disabled above.
+  # If you prefer running tests on MSVC, install GTest via vcpkg and pass CMAKE_TOOLCHAIN_FILE.

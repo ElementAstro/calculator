@@ -1,0 +1,84 @@
+name: CI (Linux & macOS)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
+
+permissions:
+  contents: read
+
+jobs:
+  build-test:
+    name: ${{ matrix.os }} | ${{ matrix.compiler }} | ${{ matrix.build_type }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Ubuntu with GCC
+          - os: ubuntu-latest
+            build_type: Release
+            compiler: gcc
+            cc: gcc
+            cxx: g++
+          # Ubuntu with Clang
+          - os: ubuntu-latest
+            build_type: Release
+            compiler: clang
+            cc: clang
+            cxx: clang++
+          # macOS with Apple Clang
+          - os: macos-latest
+            build_type: Release
+            compiler: apple-clang
+            cc: clang
+            cxx: clang++
+
+    env:
+      CC: ${{ matrix.cc }}
+      CXX: ${{ matrix.cxx }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up dependencies (Ubuntu)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake ninja-build clang libgtest-dev
+          # Build and install GoogleTest (libgtest-dev installs sources only)
+          sudo cmake -S /usr/src/googletest -B /tmp/googletest-build -G Ninja
+          sudo cmake --build /tmp/googletest-build --config Release --target install
+
+      - name: Set up dependencies (macOS)
+        if: matrix.os == 'macos-latest'
+        run: |
+          brew update
+          brew install cmake ninja googletest
+
+      - name: Configure environment (macOS)
+        if: matrix.os == 'macos-latest'
+        run: |
+          echo "CMAKE_PREFIX_PATH=$(brew --prefix)/opt/googletest" >> $GITHUB_ENV
+
+      - name: Configure (CMake) [Ubuntu]
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DBUILD_TESTS=ON -DBUILD_EXAMPLES=ON -DBUILD_BENCHMARKS=OFF
+
+      - name: Configure (CMake) [macOS]
+        if: matrix.os == 'macos-latest'
+        run: |
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DBUILD_TESTS=ON -DBUILD_EXAMPLES=ON -DBUILD_BENCHMARKS=OFF -DGTEST_ROOT=$(brew --prefix)/opt/googletest
+
+      - name: Build
+        run: |
+          cmake --build build --config ${{ matrix.build_type }} --parallel
+
+      - name: Run tests
+        run: |
+          ctest --test-dir build -C ${{ matrix.build_type }} --output-on-failure

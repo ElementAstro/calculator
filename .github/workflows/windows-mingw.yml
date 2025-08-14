@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - 'master'
+      - "master"
   pull_request:
     branches:
-      - 'master'
+      - "master"
 
 env:
   # Path to the solution file relative to the root of the project.
@@ -35,28 +35,33 @@ jobs:
         shell: msys2 {0}
 
     steps:
-    - uses: msys2/setup-msys2@v2
-      with:
-        msystem: ${{matrix.sys}}
-        update: true
-        install: >-
-          mingw-w64-${{matrix.env}}-openssl
-          base-devel
-          mingw-w64-${{matrix.env}}-cmake
-          mingw-w64-${{matrix.env}}-gcc
-          mingw-w64-${{matrix.env}}-gtest
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: ${{matrix.sys}}
+          update: true
+          install: >-
+            mingw-w64-${{matrix.env}}-openssl
+            base-devel
+            mingw-w64-${{matrix.env}}-cmake
+            mingw-w64-${{matrix.env}}-gcc
+            mingw-w64-${{matrix.env}}-gtest
 
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Build Code
-      run: |
-        mkdir build
-        cd build
-        cmake ..
-        cmake --build .
+      - name: Build Code
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          cmake --build .
 
-    - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v4.0.1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run tests
+        run: |
+          cd build
+          ctest --output-on-failure
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
