@@ -21,6 +21,7 @@
 #include <vector>
 
 #include "../calculator.hpp"
+#include "example_utils.hpp"
 
 // Forward declarations
 void demonstrate_integer_operations();
@@ -32,8 +33,7 @@ void demonstrate_best_practices();
 
 int main() {
     std::cout << "=== Numeric Types Demonstration ===" << std::endl;
-    std::cout << "Exploring different numeric types and their behaviors.\n"
-              << std::endl;
+    std::cout << "Exploring different numeric types and their behaviors.\n" << std::endl;
 
     try {
         demonstrate_integer_operations();
@@ -58,7 +58,7 @@ int main() {
         return 1;
     }
 
-    std::cout << "\n=== Numeric types examples completed! ===" << std::endl;
+    calculator_utils::print_completion_message("Numeric types examples completed!");
     return 0;
 }
 
@@ -66,68 +66,50 @@ int main() {
  * @brief Demonstrates integer operations and bitwise arithmetic
  */
 void demonstrate_integer_operations() {
-    std::cout << "--- Integer Operations ---" << std::endl;
+    calculator_utils::print_section_header("Integer Operations");
 
     // Basic arithmetic with integers
     std::cout << "Basic integer arithmetic:" << std::endl;
-    std::cout << "10 + 5 = " << calculator::eval<int>("10 + 5") << std::endl;
-    std::cout << "10 - 5 = " << calculator::eval<int>("10 - 5") << std::endl;
-    std::cout << "10 * 5 = " << calculator::eval<int>("10 * 5") << std::endl;
-    std::cout << "10 / 5 = " << calculator::eval<int>("10 / 5") << std::endl;
+    calculator_utils::eval_and_print<int>("10 + 5");
+    calculator_utils::eval_and_print<int>("10 - 5");
+    calculator_utils::eval_and_print<int>("10 * 5");
+    calculator_utils::eval_and_print<int>("10 / 5");
 
     // Integer division behavior (truncation)
     std::cout << "\nInteger division (truncation toward zero):" << std::endl;
-    std::cout << "7 / 3 = " << calculator::eval<int>("7 / 3")
-              << std::endl;  // 2
-    std::cout << "-7 / 3 = " << calculator::eval<int>("-7 / 3")
-              << std::endl;  // -2
-    std::cout << "7 / -3 = " << calculator::eval<int>("7 / -3")
-              << std::endl;  // -2
-    std::cout << "-7 / -3 = " << calculator::eval<int>("-7 / -3")
-              << std::endl;  // 2
+    calculator_utils::eval_and_print<int>("7 / 3");    // 2
+    calculator_utils::eval_and_print<int>("-7 / 3");   // -2
+    calculator_utils::eval_and_print<int>("7 / -3");   // -2
+    calculator_utils::eval_and_print<int>("-7 / -3");  // 2
 
     // Modulo operations
     std::cout << "\nModulo operations:" << std::endl;
-    std::cout << "7 % 3 = " << calculator::eval<int>("7 % 3")
-              << std::endl;  // 1
-    std::cout << "-7 % 3 = " << calculator::eval<int>("-7 % 3")
-              << std::endl;  // -1
-    std::cout << "7 % -3 = " << calculator::eval<int>("7 % -3")
-              << std::endl;  // 1
-    std::cout << "-7 % -3 = " << calculator::eval<int>("-7 % -3")
-              << std::endl;  // -1
+    calculator_utils::eval_and_print<int>("7 % 3");    // 1
+    calculator_utils::eval_and_print<int>("-7 % 3");   // -1
+    calculator_utils::eval_and_print<int>("7 % -3");   // 1
+    calculator_utils::eval_and_print<int>("-7 % -3");  // -1
 
     // Bitwise operations
     std::cout << "\nBitwise operations:" << std::endl;
     std::cout << "Binary representations:" << std::endl;
-    std::cout << "5 = 101₂, 3 = 011₂" << std::endl;
+    std::cout << "5 = 101(binary), 3 = 011(binary)" << std::endl;
 
-    std::cout << "5 | 3 (OR) = " << calculator::eval<int>("5 | 3")
-              << std::endl;  // 7 (111₂)
-    std::cout << "5 & 3 (AND) = " << calculator::eval<int>("5 & 3")
-              << std::endl;  // 1 (001₂)
-    std::cout << "5 ^ 3 (XOR) = " << calculator::eval<int>("5 ^ 3")
-              << std::endl;  // 6 (110₂)
-    std::cout << "~5 (NOT) = " << calculator::eval<int>("~5")
-              << std::endl;  // -6 (two's complement)
+    calculator_utils::eval_and_print<int>("5 | 3", "5 | 3 (OR)");   // 7 (111 binary)
+    calculator_utils::eval_and_print<int>("5 & 3", "5 & 3 (AND)");  // 1 (001 binary)
+    calculator_utils::eval_and_print<int>("5 ^ 3", "5 ^ 3 (XOR)");  // 6 (110 binary)
+    calculator_utils::eval_and_print<int>("~5", "~5 (NOT)");        // -6 (two's complement)
 
     // Bit shifting
     std::cout << "\nBit shifting operations:" << std::endl;
-    std::cout << "8 << 1 (left shift) = " << calculator::eval<int>("8 << 1")
-              << std::endl;  // 16
-    std::cout << "8 << 2 (left shift) = " << calculator::eval<int>("8 << 2")
-              << std::endl;  // 32
-    std::cout << "16 >> 1 (right shift) = " << calculator::eval<int>("16 >> 1")
-              << std::endl;  // 8
-    std::cout << "16 >> 2 (right shift) = " << calculator::eval<int>("16 >> 2")
-              << std::endl;  // 4
+    calculator_utils::eval_and_print<int>("8 << 1", "8 << 1 (left shift)");    // 16
+    calculator_utils::eval_and_print<int>("8 << 2", "8 << 2 (left shift)");    // 32
+    calculator_utils::eval_and_print<int>("16 >> 1", "16 >> 1 (right shift)"); // 8
+    calculator_utils::eval_and_print<int>("16 >> 2", "16 >> 2 (right shift)"); // 4
 
     // Complex bitwise expressions
     std::cout << "\nComplex bitwise expressions:" << std::endl;
-    std::cout << "(5 | 3) & (7 ^ 2) = "
-              << calculator::eval<int>("(5 | 3) & (7 ^ 2)") << std::endl;
-    std::cout << "~(5 & 3) | (2 << 1) = "
-              << calculator::eval<int>("~(5 & 3) | (2 << 1)") << std::endl;
+    calculator_utils::eval_and_print<int>("(5 | 3) & (7 ^ 2)");
+    calculator_utils::eval_and_print<int>("~(5 & 3) | (2 << 1)");
 
     // Integer limits
     std::cout << "\nInteger limits:" << std::endl;
@@ -135,7 +117,7 @@ void demonstrate_integer_operations() {
     std::cout << "INT_MIN = " << std::numeric_limits<int>::min() << std::endl;
 
     try {
-        int large_result = calculator::eval<int>("2000000000");
+        int large_result = calculator::eval<int>("1000000");
         std::cout << "Large integer: " << large_result << std::endl;
     } catch (const calculator::error& e) {
         std::cout << "Error with large integer: " << e.what() << std::endl;
@@ -146,40 +128,29 @@ void demonstrate_integer_operations() {
  * @brief Demonstrates floating-point operations
  */
 void demonstrate_floating_point_operations() {
-    std::cout << "--- Floating-Point Operations ---" << std::endl;
+    calculator_utils::print_section_header("Floating-Point Operations");
 
     // Basic floating-point arithmetic
     std::cout << std::fixed << std::setprecision(6);
     std::cout << "Basic floating-point arithmetic:" << std::endl;
-    std::cout << "10.5 + 5.3 = " << calculator::eval<double>("10.5 + 5.3")
-              << std::endl;
-    std::cout << "10.7 - 5.2 = " << calculator::eval<double>("10.7 - 5.2")
-              << std::endl;
-    std::cout << "3.14 * 2.0 = " << calculator::eval<double>("3.14 * 2.0")
-              << std::endl;
-    std::cout << "10.0 / 3.0 = " << calculator::eval<double>("10.0 / 3.0")
-              << std::endl;
+    calculator_utils::eval_and_print<double>("10.5 + 5.3");
+    calculator_utils::eval_and_print<double>("10.7 - 5.2");
+    calculator_utils::eval_and_print<double>("3.14 * 2.0");
+    calculator_utils::eval_and_print<double>("10.0 / 3.0");
 
     // Scientific notation
     std::cout << "\nScientific notation:" << std::endl;
-    std::cout << "1.5e2 = " << calculator::eval<double>("1.5e2") << std::endl;
-    std::cout << "2.5E-3 = " << calculator::eval<double>("2.5E-3") << std::endl;
-    std::cout << "6.02e23 = " << calculator::eval<double>("6.02e23")
-              << std::endl;
-    std::cout << "1.38e-23 = " << calculator::eval<double>("1.38e-23")
-              << std::endl;
+    calculator_utils::eval_and_print<double>("1.5e2");
+    calculator_utils::eval_and_print<double>("2.5E-3");
+    calculator_utils::eval_and_print<double>("6.02e23");
+    calculator_utils::eval_and_print<double>("1.38e-23");
 
     // Exponentiation with floating-point
     std::cout << "\nExponentiation:" << std::endl;
-    std::cout << "2.5 ** 2 = " << calculator::eval<double>("2.5 ** 2")
-              << std::endl;
-    std::cout << "8.0 ** (1.0/3.0) = "
-              << calculator::eval<double>("8.0 ** (1.0/3.0)")
-              << std::endl;  // Cube root
-    std::cout << "16.0 ** 0.5 = " << calculator::eval<double>("16.0 ** 0.5")
-              << std::endl;  // Square root
-    std::cout << "2.0 ** -1 = " << calculator::eval<double>("2.0 ** -1")
-              << std::endl;  // Reciprocal
+    calculator_utils::eval_and_print<double>("2.5 ** 2");
+    calculator_utils::eval_and_print<double>("8.0 ** (1.0/3.0)", "8.0 ** (1.0/3.0) (cube root)");
+    calculator_utils::eval_and_print<double>("16.0 ** 0.5", "16.0 ** 0.5 (square root)");
+    calculator_utils::eval_and_print<double>("2.0 ** -1", "2.0 ** -1 (reciprocal)");
 
     // Float vs Double precision
     std::cout << "\nFloat vs Double precision:" << std::endl;
@@ -215,23 +186,23 @@ void demonstrate_floating_point_operations() {
  * @brief Demonstrates type-specific behaviors and limitations
  */
 void demonstrate_type_specific_behaviors() {
-    std::cout << "--- Type-Specific Behaviors ---" << std::endl;
+    calculator_utils::print_section_header("Type-Specific Behaviors");
 
     // Operations supported by each type
     std::cout << "Operations supported by each type:" << std::endl;
 
     std::cout << "\nInteger type supports:" << std::endl;
-    std::cout << "  ✓ Arithmetic: +, -, *, /, %" << std::endl;
-    std::cout << "  ✓ Bitwise: |, &, ^, <<, >>, ~" << std::endl;
-    std::cout << "  ✓ Exponentiation: **" << std::endl;
-    std::cout << "  ✓ Scientific notation: e, E" << std::endl;
+    std::cout << "  + Arithmetic: +, -, *, /, %" << std::endl;
+    std::cout << "  + Bitwise: |, &, ^, <<, >>, ~" << std::endl;
+    std::cout << "  + Exponentiation: **" << std::endl;
+    std::cout << "  + Scientific notation: e, E" << std::endl;
 
     std::cout << "\nFloat/Double types support:" << std::endl;
-    std::cout << "  ✓ Arithmetic: +, -, *, /" << std::endl;
-    std::cout << "  ✗ Modulo: % (not supported)" << std::endl;
-    std::cout << "  ✗ Bitwise: |, &, ^, <<, >>, ~ (not supported)" << std::endl;
-    std::cout << "  ✓ Exponentiation: **" << std::endl;
-    std::cout << "  ✓ Scientific notation: e, E" << std::endl;
+    std::cout << "  + Arithmetic: +, -, *, /" << std::endl;
+    std::cout << "  - Modulo: % (not supported)" << std::endl;
+    std::cout << "  - Bitwise: |, &, ^, <<, >>, ~ (not supported)" << std::endl;
+    std::cout << "  + Exponentiation: **" << std::endl;
+    std::cout << "  + Scientific notation: e, E" << std::endl;
 
     // Demonstrate unsupported operations
     std::cout << "\nDemonstrating unsupported operations:" << std::endl;
@@ -281,7 +252,7 @@ void demonstrate_type_specific_behaviors() {
  * @brief Demonstrates precision differences between types
  */
 void demonstrate_precision_differences() {
-    std::cout << "--- Precision Differences ---" << std::endl;
+    calculator_utils::print_section_header("Precision Differences");
 
     // Precision comparison
     std::cout << std::setprecision(15);
@@ -348,39 +319,14 @@ void demonstrate_precision_differences() {
  * @brief Demonstrates performance comparison between types
  */
 void demonstrate_performance_comparison() {
-    std::cout << "--- Performance Comparison ---" << std::endl;
+    calculator_utils::print_section_header("Performance Comparison");
 
     const int iterations = 100000;
 
-    // Benchmark integer operations
-    auto start = std::chrono::high_resolution_clock::now();
-    for (int i = 0; i < iterations; ++i) {
-        int result = calculator::eval<int>("123 + 456");
-        (void)result;  // Suppress unused variable warning
-    }
-    auto end = std::chrono::high_resolution_clock::now();
-    auto int_time =
-        std::chrono::duration_cast<std::chrono::microseconds>(end - start);
-
-    // Benchmark float operations
-    start = std::chrono::high_resolution_clock::now();
-    for (int i = 0; i < iterations; ++i) {
-        float result = calculator::eval<float>("123.0 + 456.0");
-        (void)result;  // Suppress unused variable warning
-    }
-    end = std::chrono::high_resolution_clock::now();
-    auto float_time =
-        std::chrono::duration_cast<std::chrono::microseconds>(end - start);
-
-    // Benchmark double operations
-    start = std::chrono::high_resolution_clock::now();
-    for (int i = 0; i < iterations; ++i) {
-        double result = calculator::eval<double>("123.0 + 456.0");
-        (void)result;  // Suppress unused variable warning
-    }
-    end = std::chrono::high_resolution_clock::now();
-    auto double_time =
-        std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+    // Benchmark operations for different types
+    auto int_time = calculator_utils::benchmark_eval<int>("123 + 456", iterations);
+    auto float_time = calculator_utils::benchmark_eval<float>("123.0 + 456.0", iterations);
+    auto double_time = calculator_utils::benchmark_eval<double>("123.0 + 456.0", iterations);
 
     std::cout << "Performance comparison (" << iterations
               << " iterations):" << std::endl;
@@ -413,7 +359,7 @@ void demonstrate_performance_comparison() {
  * @brief Demonstrates best practices for type selection
  */
 void demonstrate_best_practices() {
-    std::cout << "--- Best Practices for Type Selection ---" << std::endl;
+    calculator_utils::print_section_header("Best Practices for Type Selection");
 
     std::cout << "Type selection guidelines:" << std::endl;
     std::cout << "\n1. Use int for:" << std::endl;
@@ -453,8 +399,7 @@ void demonstrate_best_practices() {
     finance.set("time", 10.0);
     double compound_interest = finance.eval("principal * (1 + rate) ** time");
     std::cout << std::fixed << std::setprecision(2);
-    std::cout << "Compound interest (double): $" << compound_interest
-              << std::endl;
+    std::cout << "Compound interest (double): $" << compound_interest << std::endl;
 
     // Graphics coordinate (use float)
     calculator::ExpressionParser<float> graphics;
@@ -463,8 +408,7 @@ void demonstrate_best_practices() {
     float center_x = graphics.eval("screen_width / 2.0");
     float center_y = graphics.eval("screen_height / 2.0");
     std::cout << std::setprecision(1);
-    std::cout << "Screen center (float): (" << center_x << ", " << center_y
-              << ")" << std::endl;
+    std::cout << "Screen center (float): (" << center_x << ", " << center_y << ")" << std::endl;
 
     // Bitwise flags (use int)
     calculator::ExpressionParser<int> flags;
@@ -473,8 +417,7 @@ void demonstrate_best_practices() {
     flags.set("EXECUTE", 4);  // 100
     int permissions = flags.eval("READ | WRITE | EXECUTE");
     std::cout << "File permissions (int): " << permissions
-              << " (binary: " << std::bitset<3>(permissions) << ")"
-              << std::endl;
+              << " (binary: " << std::bitset<3>(permissions) << ")" << std::endl;
 
     std::cout << "\nKey takeaways:" << std::endl;
     std::cout << "- Choose the most appropriate type for your use case"

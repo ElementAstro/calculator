@@ -16,8 +16,8 @@
 #include <string>
 #include <vector>
 
-
 #include "calculator.hpp"
+#include "example_utils.hpp"
 
 // Function prototypes
 void demonstrate_basic_arithmetic();
@@ -28,105 +28,75 @@ void demonstrate_advanced_mathematics();
 void demonstrate_real_world_applications();
 
 int main() {
-    std::cout << "=== Modern C++ Calculator Library Examples ===" << std::endl;
-    std::cout << "This program demonstrates various features of the calculator "
-                 "library.\n"
-              << std::endl;
-
-    try {
-        demonstrate_basic_arithmetic();
-        std::cout << std::endl;
-
-        demonstrate_variables_and_functions();
-        std::cout << std::endl;
-
-        demonstrate_numeric_types();
-        std::cout << std::endl;
-
-        demonstrate_error_handling();
-        std::cout << std::endl;
-
-        demonstrate_advanced_mathematics();
-        std::cout << std::endl;
-
-        demonstrate_real_world_applications();
-
-    } catch (const std::exception& e) {
-        std::cerr << "Unexpected error: " << e.what() << std::endl;
-        return 1;
-    }
-
-    std::cout << "\n=== All examples completed successfully! ===" << std::endl;
-    return 0;
+    return calculator_utils::run_demo_program(
+        "Modern C++ Calculator Library Examples",
+        {
+            demonstrate_basic_arithmetic,
+            demonstrate_variables_and_functions,
+            demonstrate_numeric_types,
+            demonstrate_error_handling,
+            demonstrate_advanced_mathematics,
+            demonstrate_real_world_applications
+        }
+    );
 }
 
 /**
  * @brief Demonstrates basic arithmetic operations
  */
 void demonstrate_basic_arithmetic() {
-    std::cout << "--- Basic Arithmetic Operations ---" << std::endl;
+    calculator_utils::print_section_header("Basic Arithmetic Operations");
 
     // Simple arithmetic
     std::cout << "Simple arithmetic:" << std::endl;
-    std::cout << "2 + 3 = " << calculator::eval("2 + 3") << std::endl;
-    std::cout << "10 - 4 = " << calculator::eval("10 - 4") << std::endl;
-    std::cout << "5 * 6 = " << calculator::eval("5 * 6") << std::endl;
-    std::cout << "15 / 3 = " << calculator::eval("15 / 3") << std::endl;
+    calculator_utils::eval_and_print<double>("2 + 3");
+    calculator_utils::eval_and_print<double>("10 - 4");
+    calculator_utils::eval_and_print<double>("5 * 6");
+    calculator_utils::eval_and_print<double>("15 / 3");
 
     // Operator precedence
     std::cout << "\nOperator precedence:" << std::endl;
-    std::cout << "2 + 3 * 4 = " << calculator::eval("2 + 3 * 4") << std::endl;
-    std::cout << "(2 + 3) * 4 = " << calculator::eval("(2 + 3) * 4")
-              << std::endl;
-    std::cout << "2 ** 3 ** 2 = " << calculator::eval("2 ** 3 ** 2")
-              << std::endl;
+    calculator_utils::eval_and_print<double>("2 + 3 * 4");
+    calculator_utils::eval_and_print<double>("(2 + 3) * 4");
+    calculator_utils::eval_and_print<double>("2 ** 3 ** 2");
 
     // Scientific notation
     std::cout << "\nScientific notation:" << std::endl;
-    std::cout << "1.5e2 = " << calculator::eval("1.5e2") << std::endl;
-    std::cout << "2.5E-3 = " << calculator::eval("2.5E-3") << std::endl;
-    std::cout << "6.02e23 = " << calculator::eval("6.02e23") << std::endl;
+    calculator_utils::eval_and_print<double>("1.5e2");
+    calculator_utils::eval_and_print<double>("2.5E-3");
+    calculator_utils::eval_and_print<double>("6.02e23");
 }
 
 /**
  * @brief Demonstrates variables and custom functions
  */
 void demonstrate_variables_and_functions() {
-    std::cout << "--- Variables and Functions ---" << std::endl;
+    calculator_utils::print_section_header("Variables and Functions");
 
     calculator::ExpressionParser<double> parser;
 
-    // Set up mathematical constants
-    parser.set("pi", M_PI);
-    parser.set("e", M_E);
+    // Set up mathematical environment
+    calculator_utils::setup_full_math_environment(parser);
 
     // Set up variables
     parser.set("x", 5.0);
     parser.set("y", 10.0);
     parser.set("radius", 3.0);
 
-    // Set up mathematical functions
-    parser.set("sin", [](double x) { return std::sin(x); });
-    parser.set("cos", [](double x) { return std::cos(x); });
-    parser.set("sqrt", [](double x) { return std::sqrt(x); });
-    parser.set("log", [](double x) { return std::log(x); });
-    parser.set("square", [](double x) { return x * x; });
-    parser.set("cube", [](double x) { return x * x * x; });
-
     std::cout << "Using variables:" << std::endl;
-    std::cout << "x = " << parser.eval("x") << std::endl;
-    std::cout << "x + y = " << parser.eval("x + y") << std::endl;
-    std::cout << "x * y = " << parser.eval("x * y") << std::endl;
+    calculator_utils::parser_eval_and_print(parser, "x");
+    calculator_utils::parser_eval_and_print(parser, "x + y");
+    calculator_utils::parser_eval_and_print(parser, "x * y");
 
     std::cout << "\nUsing functions:" << std::endl;
-    std::cout << "square(5) = " << parser.eval("square(5)") << std::endl;
-    std::cout << "cube(3) = " << parser.eval("cube(3)") << std::endl;
-    std::cout << "sqrt(16) = " << parser.eval("sqrt(16)") << std::endl;
+    calculator_utils::parser_eval_and_print(parser, "square(5)");
+    calculator_utils::parser_eval_and_print(parser, "cube(3)");
+    calculator_utils::parser_eval_and_print(parser, "sqrt(16)");
 
     std::cout << "\nMathematical calculations:" << std::endl;
-    std::cout << "sin(pi/2) = " << parser.eval("sin(pi/2)") << std::endl;
-    std::cout << "cos(0) = " << parser.eval("cos(0)") << std::endl;
-    std::cout << "log(e) = " << parser.eval("log(e)") << std::endl;
+    calculator_utils::parser_eval_and_print(parser, "sin(pi/2)");
+    calculator_utils::parser_eval_and_print(parser, "cos(0)");
+    calculator_utils::parser_eval_and_print(parser, "log(e)");
 
     std::cout << "\nCircle area (π * r²):" << std::endl;
     double area = parser.eval("pi * square(radius)");
@@ -137,153 +107,100 @@ void demonstrate_variables_and_functions() {
  * @brief Demonstrates different numeric types
  */
 void demonstrate_numeric_types() {
-    std::cout << "--- Different Numeric Types ---" << std::endl;
+    calculator_utils::print_section_header("Different Numeric Types");
 
     // Integer operations
     std::cout << "Integer operations:" << std::endl;
-    std::cout << "10 / 3 (int) = " << calculator::eval<int>("10 / 3")
-              << std::endl;
-    std::cout << "10 % 3 (int) = " << calculator::eval<int>("10 % 3")
-              << std::endl;
-    std::cout << "5 & 3 (bitwise AND) = " << calculator::eval<int>("5 & 3")
-              << std::endl;
-    std::cout << "5 | 3 (bitwise OR) = " << calculator::eval<int>("5 | 3")
-              << std::endl;
-    std::cout << "8 >> 1 (right shift) = " << calculator::eval<int>("8 >> 1")
-              << std::endl;
+    calculator_utils::eval_and_print<int>("10 / 3", "10 / 3 (int)");
+    calculator_utils::eval_and_print<int>("10 % 3", "10 % 3 (int)");
+    calculator_utils::eval_and_print<int>("5 & 3", "5 & 3 (bitwise AND)");
+    calculator_utils::eval_and_print<int>("5 | 3", "5 | 3 (bitwise OR)");
+    calculator_utils::eval_and_print<int>("8 >> 1", "8 >> 1 (right shift)");
 
     // Floating-point operations
     std::cout << "\nFloating-point operations:" << std::endl;
     std::cout << std::fixed << std::setprecision(6);
-    std::cout << "10.0 / 3.0 (double) = "
-              << calculator::eval<double>("10.0 / 3.0") << std::endl;
-    std::cout << "10.0 / 3.0 (float) = "
-              << calculator::eval<float>("10.0 / 3.0") << std::endl;
+    calculator_utils::eval_and_print<double>("10.0 / 3.0", "10.0 / 3.0 (double)");
+    calculator_utils::eval_and_print<float>("10.0 / 3.0", "10.0 / 3.0 (float)");
 
     // Type-specific behavior
     std::cout << "\nType-specific behavior:" << std::endl;
-    std::cout << "2.5 ** 2 (double) = " << calculator::eval<double>("2.5 ** 2")
-              << std::endl;
-    std::cout << "2 ** 3 (int) = " << calculator::eval<int>("2 ** 3")
-              << std::endl;
+    calculator_utils::eval_and_print<double>("2.5 ** 2", "2.5 ** 2 (double)");
+    calculator_utils::eval_and_print<int>("2 ** 3", "2 ** 3 (int)");
 }
 
 /**
  * @brief Demonstrates error handling patterns
  */
 void demonstrate_error_handling() {
-    std::cout << "--- Error Handling ---" << std::endl;
+    calculator_utils::print_section_header("Error Handling");
 
     std::vector<std::string> invalid_expressions = {
-        "2 + + 3",      // Syntax error (note: this might actually work in some
-                        // parsers)
+        "2 + + 3",      // Syntax error (note: this might actually work in some parsers)
         "(2 + 3",       // Unmatched parenthesis
         "unknown_var",  // Undefined variable
         ""              // Empty expression
     };
 
-    for (const auto& expr : invalid_expressions) {
-        try {
-            double result = calculator::eval(expr);
-            std::cout << "Unexpected success: " << expr << " = " << result
-                      << std::endl;
-        } catch (const std::runtime_error& e) {
-            std::cout << "Error in '" << expr << "': " << e.what() << std::endl;
-        } catch (const std::exception& e) {
-            std::cout << "Standard error in '" << expr << "': " << e.what()
-                      << std::endl;
-        } catch (...) {
-            std::cout << "Unknown error in '" << expr << "'" << std::endl;
-        }
-    }
+    calculator_utils::test_invalid_expressions(invalid_expressions);
 
     // Test division by zero separately with more robust error handling
-    std::cout << "\nTesting division by zero (may cause termination):"
-              << std::endl;
-    std::cout << "Note: Division by zero handling depends on the calculator "
-                 "implementation."
-              << std::endl;
+    std::cout << "\nTesting division by zero (may cause termination):" << std::endl;
+    std::cout << "Note: Division by zero handling depends on the calculator implementation." << std::endl;
 
     // Demonstrate safe evaluation function
-    auto safe_eval = [](const std::string& expression) -> double {
-        try {
-            return calculator::eval(expression);
-        } catch (const std::runtime_error& e) {
-            std::cerr << "Safe eval error: " << e.what() << std::endl;
-            return 0.0;  // Default value
-        } catch (const std::exception& e) {
-            std::cerr << "Safe eval error: " << e.what() << std::endl;
-            return 0.0;  // Default value
-        } catch (...) {
-            std::cerr << "Safe eval: Unknown error occurred" << std::endl;
-            return 0.0;  // Default value
-        }
-    };
+    auto safe_eval = calculator_utils::create_safe_evaluator<double>(0.0);
 
     std::cout << "\nSafe evaluation examples:" << std::endl;
     std::cout << "safe_eval('2 + 3') = " << safe_eval("2 + 3") << std::endl;
-    std::cout << "safe_eval('unknown_var') = " << safe_eval("unknown_var")
-              << std::endl;
-    std::cout << "Note: Division by zero testing skipped due to library "
-                 "exception handling."
-              << std::endl;
+    std::cout << "safe_eval('unknown_var') = " << safe_eval("unknown_var") << std::endl;
+    std::cout << "Note: Division by zero testing skipped due to library exception handling." << std::endl;
 }
 
 /**
  * @brief Demonstrates advanced mathematical operations
  */
 void demonstrate_advanced_mathematics() {
-    std::cout << "--- Advanced Mathematics ---" << std::endl;
+    calculator_utils::print_section_header("Advanced Mathematics");
 
     calculator::ExpressionParser<double> parser;
 
-    // Set up mathematical constants and functions
-    parser.set("pi", M_PI);
-    parser.set("e", M_E);
-    parser.set("sin", [](double x) { return std::sin(x); });
-    parser.set("cos", [](double x) { return std::cos(x); });
+    // Set up mathematical environment
+    calculator_utils::setup_full_math_environment(parser);
     parser.set("tan", [](double x) { return std::tan(x); });
-    parser.set("sqrt", [](double x) { return std::sqrt(x); });
-    parser.set("log", [](double x) { return std::log(x); });
-    parser.set("exp", [](double x) { return std::exp(x); });
-    parser.set("abs", [](double x) { return std::abs(x); });
 
     std::cout << std::fixed << std::setprecision(8);
 
     // Trigonometric identities
     std::cout << "Trigonometric identities:" << std::endl;
-    std::cout << "sin²(π/4) + cos²(π/4) = "
-              << parser.eval("sin(pi/4) ** 2 + cos(pi/4) ** 2") << std::endl;
-    std::cout << "tan(π/4) = " << parser.eval("tan(pi/4)") << std::endl;
+    calculator_utils::parser_eval_and_print(parser, "sin(pi/4) ** 2 + cos(pi/4) ** 2", "sin²(π/4) + cos²(π/4)");
+    calculator_utils::parser_eval_and_print(parser, "tan(pi/4)", "tan(π/4)");
 
     // Exponential and logarithmic
     std::cout << "\nExponential and logarithmic:" << std::endl;
-    std::cout << "e^(ln(5)) = " << parser.eval("exp(log(5))") << std::endl;
-    std::cout << "ln(e^3) = " << parser.eval("log(exp(3))") << std::endl;
+    calculator_utils::parser_eval_and_print(parser, "exp(log(5))", "e^(ln(5))");
+    calculator_utils::parser_eval_and_print(parser, "log(exp(3))", "ln(e^3)");
 
     // Complex expressions
     std::cout << "\nComplex expressions:" << std::endl;
-    std::cout << "√(sin²(π/2) + cos²(π/2)) = "
-              << parser.eval("sqrt(sin(pi/2) ** 2 + cos(pi/2) ** 2)")
-              << std::endl;
+    calculator_utils::parser_eval_and_print(parser, "sqrt(sin(pi/2) ** 2 + cos(pi/2) ** 2)", "√(sin²(π/2) + cos²(π/2))");
 
     // Nested function calls
     std::cout << "\nNested function calls:" << std::endl;
-    std::cout << "sin(cos(π/4)) = " << parser.eval("sin(cos(pi/4))")
-              << std::endl;
-    std::cout << "log(exp(abs(-2))) = " << parser.eval("log(exp(abs(-2)))")
-              << std::endl;
+    calculator_utils::parser_eval_and_print(parser, "sin(cos(pi/4))", "sin(cos(π/4))");
+    calculator_utils::parser_eval_and_print(parser, "log(exp(abs(-2)))", "log(exp(abs(-2)))");
 }
 
 /**
  * @brief Demonstrates real-world applications
  */
 void demonstrate_real_world_applications() {
-    std::cout << "--- Real-world Applications ---" << std::endl;
+    calculator_utils::print_section_header("Real-world Applications");
 
     calculator::ExpressionParser<double> parser;
-    parser.set("pi", M_PI);
-    parser.set("sqrt", [](double x) { return std::sqrt(x); });
+    calculator_utils::setup_basic_math_constants(parser);
+    calculator_utils::setup_common_math_functions(parser);
+    calculator_utils::setup_trigonometric_functions(parser);
 
     // Physics: Projectile motion
     std::cout << "Physics - Projectile motion:" << std::endl;
@@ -305,8 +222,7 @@ void demonstrate_real_world_applications() {
     double x = parser.eval("vx * t");
     double y = parser.eval("vy * t - 0.5 * g * t ** 2");
 
-    std::cout << "Position at t=2s: x=" << x << "m, y=" << y << "m"
-              << std::endl;
+    std::cout << "Position at t=2s: x=" << x << "m, y=" << y << "m" << std::endl;
 
     // Finance: Compound interest
     std::cout << "\nFinance - Compound interest:" << std::endl;
@@ -315,8 +231,7 @@ void demonstrate_real_world_applications() {
     parser.set("time", 10.0);         // 10 years
 
     double compound_amount = parser.eval("principal * (1 + rate) ** time");
-    double interest_earned =
-        parser.eval("principal * (1 + rate) ** time - principal");
+    double interest_earned = parser.eval("principal * (1 + rate) ** time - principal");
 
     std::cout << "After 10 years: $" << compound_amount << std::endl;
     std::cout << "Interest earned: $" << interest_earned << std::endl;

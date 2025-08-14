@@ -29,6 +29,7 @@
 
 #include <gtest/gtest.h>
 #include "calculator.hpp"
+#include "../example/example_utils.hpp"
 
 using namespace calculator;
 
@@ -163,18 +164,12 @@ TEST(CalculatorTest, Variables) {
 
 TEST(CalculatorTest, Functions) {
     ExpressionParser<double> parser;
-    parser.set("pi", 3.1415926535897932);
-    parser.set("sqrt", [](double x) { return std::sqrt(x); });
-    parser.set("sin", [](double x) { return std::sin(x); });
-    parser.set("cos", [](double x) { return std::cos(x); });
+    calculator_utils::setup_full_math_environment(parser);
+
     EXPECT_DOUBLE_EQ(parser.eval("sqrt(2)"), 1.4142135623730951);
     EXPECT_DOUBLE_EQ(parser.eval("sin(0)"), 0.0);
     EXPECT_DOUBLE_EQ(parser.eval("cos(0)"), 1.0);
     EXPECT_DOUBLE_EQ(parser.eval("sin(pi/2)"), 1.0);
-
-    parser.set("e", 2.718281828459045);
-    parser.set("ln", [](double x) { return std::log(x); });
-    parser.set("exp", [](double x) { return std::exp(x); });
     EXPECT_DOUBLE_EQ(parser.eval("ln(e)"), 1.0);
     EXPECT_DOUBLE_EQ(parser.eval("exp(1)"), 2.718281828459045);
     EXPECT_DOUBLE_EQ(parser.eval("exp(0)"), 1.0);
@@ -530,11 +525,8 @@ TEST(CalculatorTest, AdvancedVariableTests) {
 TEST(CalculatorTest, AdvancedFunctionTests) {
     ExpressionParser<double> parser;
 
-    // Multiple functions
-    parser.set("square", [](double x) { return x * x; });
-    parser.set("cube", [](double x) { return x * x * x; });
-    parser.set("abs", [](double x) { return std::abs(x); });
-    parser.set("sqrt", [](double x) { return std::sqrt(x); });
+    // Set up mathematical functions
+    calculator_utils::setup_common_math_functions(parser);
 
     // Function composition
     EXPECT_DOUBLE_EQ(parser.eval("square(3)"), 9.0);
