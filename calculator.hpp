@@ -131,8 +131,7 @@ private:
         return value;
     }
 
-    [[nodiscard]] constexpr T calculate(T v1, T v2,
-                                        const Operator &op) const noexcept {
+    [[nodiscard]] constexpr T calculate(T v1, T v2, const Operator &op) const {
         if constexpr (std::is_same_v<T, float> || std::is_same_v<T, double>) {
             switch (op.op) {
                 case OPERATOR_ADDITION:

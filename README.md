@@ -3,108 +3,117 @@
 [![CodeQL](https://github.com/ElementAstro/calculator/actions/workflows/codeql.yml/badge.svg)](https://github.com/ElementAstro/calculator/actions/workflows/codeql.yml)
 [![MinGW](https://github.com/ElementAstro/calculator/actions/workflows/windows-mingw.yml/badge.svg)](https://github.com/ElementAstro/calculator/actions/workflows/windows-mingw.yml)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=ElementAstro_calculator&metric=bugs)](https://sonarcloud.io/summary/new_code?id=ElementAstro_calculator)
-[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=ElementAstro_calculator&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=ElementAstro_calculator)
+[![Documentation](https://img.shields.io/badge/docs-mkdocs-blue.svg)](https://elementastro.github.io/calculator/)
 
-This is a modern C++ implementation of a calculator that can evaluate mathematical expressions. It supports various arithmetic operations, bitwise operations, and follows the standard order of operations.
+A modern, high-performance C++ header-only calculator library for evaluating mathematical expressions. Built with C++17/20 features, this library provides a robust and flexible expression parser that supports variables, functions, and comprehensive mathematical operations.
 
-> [!IMPORTANT]
-> This library is still under development and may contain bugs.
+📖 **[Complete Documentation](https://elementastro.github.io/calculator/)** | 🚀 **[Quick Start Guide](https://elementastro.github.io/calculator/getting-started/quick-start/)** | 📋 **[API Reference](https://elementastro.github.io/calculator/api-reference/)**
 
-## Features
+## ✨ Key Features
 
-- Supports basic arithmetic operations: addition (`+`), subtraction (`-`), multiplication (`*`), division (`/`), and modulo (`%`)
-- Supports bitwise operations: OR (`|`), XOR (`^`), AND (`&`), left shift (`<<`), and right shift (`>>`)
-- Supports exponentiation: power (`**`) and scientific notation (`e` or `E`)
-- Handles unary operators: unary plus (`+`), unary minus (`-`), and bitwise NOT (`~`)
-- Follows the standard order of operations and operator precedence
-- Supports parentheses for grouping subexpressions
-- Provides error handling and informative error messages
-- Supports different numeric types: `int`, `float`, and `double`
-- Lightweight and header-only implementation
+- **🚀 Header-only**: Single file, easy integration
+- **🔢 Multiple numeric types**: Support for `int`, `float`, and `double`
+- **⚡ High performance**: Optimized expression parsing and evaluation
+- **🧮 Comprehensive operations**: Arithmetic, bitwise, and exponentiation
+- **📐 Mathematical functions**: Support for custom functions and variables
+- **🛡️ Robust error handling**: Detailed error messages with position information
+- **📏 Operator precedence**: Follows standard mathematical precedence rules
+- **🔧 Template-based**: Type-safe generic implementation
 
-## Usage
+## 🚀 Quick Start
 
-1. Include the `calculator.hpp` header file in your C++ project.
+### Installation
 
-2. Use the `calculator::eval` function to evaluate mathematical expressions:
+Simply download and include the header file:
+
+```bash
+curl -O https://raw.githubusercontent.com/ElementAstro/calculator/main/calculator.hpp
+```
+
+### Basic Usage
 
 ```cpp
 #include "calculator.hpp"
 #include <iostream>
 
 int main() {
-    std::string expr = "12.34 + 56.78";
-    double result = calculator::eval(expr);
-    std::cout << "Result: " << result << std::endl;
+    // Simple expression evaluation
+    double result = calculator::eval("3 + 4 * 2 / (1 - 5) ** 2");
+    std::cout << "Result: " << result << std::endl;  // Output: 3.5
 
-    try {
-        // Try evaluating the expression with an integer result
-        // But this will throw an exception because the parameters are not an integer
-        std::string expr2 = "12.34 + 56.78";
-        int result2 = calculator::eval<int>(expr2);
-        std::cout << "Result: " << result2 << std::endl;
-    } catch (const calculator::error& e) {
-        std::cerr << e.what() << std::endl;
-    }
-  
+    // Using variables and functions
+    calculator::ExpressionParser<double> parser;
+    parser.set("x", 5.0);
+    parser.set("square", [](double x) { return x * x; });
+
+    double advanced_result = parser.eval("square(x) + 10");
+    std::cout << "Advanced result: " << advanced_result << std::endl;  // Output: 35
+
+    return 0;
 }
 ```
 
-## Supported Operations
+**[📖 See complete examples and tutorials →](https://elementastro.github.io/calculator/getting-started/quick-start/)**
 
-The calculator supports the following operations:
+## 📚 Supported Operations
 
-- Arithmetic Operations:
-  - Addition: `+`
-  - Subtraction: `-`
-  - Multiplication: `*`
-  - Division: `/`
-  - Modulo: `%`
-- Bitwise Operations:
-  - Bitwise OR: `|`
-  - Bitwise XOR: `^`
-  - Bitwise AND: `&`
-  - Left Shift: `<<`
-  - Right Shift: `>>`
-- Exponentiation:
-  - Power: `**`
-  - Scientific Notation: `e` or `E`
-- Unary Operators:
-  - Unary Plus: `+`
-  - Unary Minus: `-`
-  - Bitwise NOT: `~` (only supported for `int` type)
+| Category | Operators | Example | Types |
+|----------|-----------|---------|-------|
+| **Arithmetic** | `+`, `-`, `*`, `/`, `%` | `3 + 4 * 2` | All |
+| **Bitwise** | `\|`, `^`, `&`, `<<`, `>>`, `~` | `5 & 3` | `int` only |
+| **Exponentiation** | `**`, `e`/`E` | `2 ** 3`, `1.5e2` | All |
+| **Unary** | `+`, `-`, `~` | `+5`, `-3`, `~7` | All/`int` |
+| **Grouping** | `(`, `)` | `(2 + 3) * 4` | All |
 
-## Error Handling
+### Advanced Features
 
-The calculator provides error handling and throws exceptions of type `calculator::error` in case of syntax errors or invalid expressions. The error message includes information about the unexpected token and its position in the expression.
+- **Variables**: `parser.set("x", 5.0)` → `"x + 10"`
+- **Functions**: `parser.set("sqrt", [](double x) { return std::sqrt(x); })` → `"sqrt(16)"`
+- **Multiple Types**: `int`, `float`, `double` with type-specific behaviors
+- **Error Handling**: Detailed error messages with position information
 
-## Numeric Types
+**[📋 Complete operator reference and examples →](https://elementastro.github.io/calculator/reference/operators/)**
 
-The calculator supports different numeric types:
+## 🎯 Use Cases
 
-- `int`: Integers
-- `float`: Single-precision floating-point numbers
-- `double`: Double-precision floating-point numbers
+- **Scientific Computing**: Mathematical expression evaluation with variables and functions
+- **Configuration Systems**: Dynamic formula parsing for application settings
+- **Game Development**: Damage calculations, physics formulas, procedural generation
+- **Financial Applications**: Interest calculations, custom metrics, business rules
+- **Educational Tools**: Teaching mathematical concepts and expression evaluation
 
-By default, the `calculator::eval` function uses `double` as the result type. To use a different numeric type, you can explicitly specify the type as a template argument:
+**[🔍 See real-world examples →](https://elementastro.github.io/calculator/examples/real-world-usage/)**
 
-```cpp
-int result = calculator::eval<int>("1 + 2");
-float result = calculator::eval<float>("3.14 * 2");
-```
+## 📖 Documentation
 
-Note that bitwise operations and modulo are only supported for integer types.
+| Section | Description |
+|---------|-------------|
+| **[Getting Started](https://elementastro.github.io/calculator/getting-started/)** | Installation, quick start, and building |
+| **[User Guide](https://elementastro.github.io/calculator/user-guide/)** | Comprehensive usage instructions |
+| **[API Reference](https://elementastro.github.io/calculator/api-reference/)** | Complete class and function documentation |
+| **[Examples](https://elementastro.github.io/calculator/examples/)** | Practical code examples and patterns |
+| **[Reference](https://elementastro.github.io/calculator/reference/)** | Operators, types, and limitations |
 
-## Limitations
+## 🔧 Requirements
 
-- The calculator assumes that the input expression is well-formed and does not contain any invalid characters or unsupported operations.
-- The calculator does not support variables or functions.
-- The maximum length of numbers is limited by the precision of the chosen numeric type.
+- **C++ Standard**: C++17 minimum, C++20 recommended
+- **Compilers**: GCC 8+, Clang 8+, MSVC 19+ (VS 2015+)
+- **Dependencies**: None (header-only, standard library only)
+- **Platforms**: Linux, Windows, macOS, FreeBSD
 
-## License
+## 📄 License
 
-This calculator implementation is released under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](LICENSE) - see the LICENSE file for details.
 
-## Contributing
+## 🤝 Contributing
 
-Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
+We welcome contributions! Please see our [Contributing Guide](https://elementastro.github.io/calculator/development/contributing/) for details on how to get started.
+
+- 🐛 [Report bugs](https://github.com/ElementAstro/calculator/issues)
+- 💡 [Request features](https://github.com/ElementAstro/calculator/issues)
+- 🔧 [Submit pull requests](https://github.com/ElementAstro/calculator/pulls)
+- 💬 [Join discussions](https://github.com/ElementAstro/calculator/discussions)
+
+---
+
+**⭐ Star this repository if you find it useful!**

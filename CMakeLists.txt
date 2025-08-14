@@ -26,8 +26,27 @@ endif()
 install(FILES calculator.hpp DESTINATION calculator)
 
 if (BUILD_EXAMPLES)
+    # Main comprehensive example
     add_executable(example example/main.cpp)
     target_link_libraries(example PRIVATE calculator)
+
+    # Advanced usage patterns
+    add_executable(advanced_usage example/advanced_usage.cpp)
+    target_link_libraries(advanced_usage PRIVATE calculator)
+
+    # Error handling demonstration
+    add_executable(error_handling_demo example/error_handling_demo.cpp)
+    target_link_libraries(error_handling_demo PRIVATE calculator)
+
+    # Numeric types demonstration
+    add_executable(numeric_types_demo example/numeric_types_demo.cpp)
+    target_link_libraries(numeric_types_demo PRIVATE calculator)
+
+    # Set output directory for examples
+    set_target_properties(example advanced_usage error_handling_demo numeric_types_demo
+        PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/example
+    )
 endif()
 
 if (BUILD_TESTS)

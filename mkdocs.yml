@@ -1,0 +1,131 @@
+site_name: Modern C++ Calculator
+site_description: A modern C++ header-only calculator library for evaluating mathematical expressions
+site_author: Max Qian
+site_url: https://elementastro.github.io/calculator/
+
+repo_name: ElementAstro/calculator
+repo_url: https://github.com/ElementAstro/calculator
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  language: en
+  palette:
+    - scheme: default
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.path
+    - navigation.indexes
+    - toc.follow
+    - toc.integrate
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.select
+    - content.code.annotate
+
+plugins:
+  - search:
+      lang: en
+  - awesome-pages
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      repo_url_shorthand: true
+      user: ElementAstro
+      repo: calculator
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - getting-started/index.md
+    - Installation: getting-started/installation.md
+    - Quick Start: getting-started/quick-start.md
+    - Building: getting-started/building.md
+  - User Guide:
+    - user-guide/index.md
+    - Basic Usage: user-guide/basic-usage.md
+    - Advanced Features: user-guide/advanced-features.md
+    - Variables & Functions: user-guide/variables-functions.md
+    - Error Handling: user-guide/error-handling.md
+  - API Reference:
+    - api-reference/index.md
+    - ExpressionParser: api-reference/expression-parser.md
+    - Functions: api-reference/functions.md
+    - Exceptions: api-reference/exceptions.md
+  - Examples:
+    - examples/index.md
+    - Basic Examples: examples/basic-examples.md
+    - Advanced Examples: examples/advanced-examples.md
+    - Real-world Usage: examples/real-world-usage.md
+  - Reference:
+    - reference/index.md
+    - Operators: reference/operators.md
+    - Numeric Types: reference/numeric-types.md
+    - Limitations: reference/limitations.md
+  - Development:
+    - development/index.md
+    - Building from Source: development/building-from-source.md
+    - Testing: development/testing.md
+    - Benchmarking: development/benchmarking.md
+    - Contributing: development/contributing.md
+  - Changelog: changelog.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/ElementAstro/calculator
+  version:
+    provider: mike
+
+copyright: Copyright &copy; 2023-2024 Max Qian
