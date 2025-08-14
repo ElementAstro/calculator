@@ -42,6 +42,14 @@ if (BUILD_EXAMPLES)
     add_executable(numeric_types_demo example/numeric_types_demo.cpp)
     target_link_libraries(numeric_types_demo PRIVATE calculator)
 
+    # Ensure math constants like M_PI and M_E are available on MSVC
+    if (MSVC)
+        target_compile_definitions(example PRIVATE _USE_MATH_DEFINES)
+        target_compile_definitions(advanced_usage PRIVATE _USE_MATH_DEFINES)
+        target_compile_definitions(error_handling_demo PRIVATE _USE_MATH_DEFINES)
+        target_compile_definitions(numeric_types_demo PRIVATE _USE_MATH_DEFINES)
+    endif()
+
     # Set output directory for examples
     set_target_properties(example advanced_usage error_handling_demo numeric_types_demo
         PROPERTIES
