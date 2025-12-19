@@ -31,8 +31,68 @@
 *.out
 *.app
 
-# CMake
+# CMake build artifacts
 build/
+cmake-build-*/
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+CTestTestfile.cmake
+compile_commands.json
+Makefile
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+Testing/
 
+# xmake build artifacts
+.xmake/
+.build/
+
+# IDE specific files
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.VC.db
+*.VC.opendb
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# CLion
+.idea/
+cmake-build-*/
+
+# Clangd
+.clangd/
 .cache/
+
+# Documentation
 site/
+docs/_build/
+docs/.buildinfo
+
+# OS specific
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Python (for documentation tools)
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+venv/
+env/
+ENV/
+
+# Test and benchmark outputs
+*.log
+*.tlog

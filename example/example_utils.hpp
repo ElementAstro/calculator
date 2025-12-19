@@ -9,12 +9,17 @@
  * - Error handling patterns
  * - Performance benchmarking utilities
  * - Common evaluation patterns
+ *
+ * Note: The new ExpressionParser in v2.0 has built-in constants (pi, e, phi, tau) and
+ * built-in functions (sin, cos, tan, sqrt, abs, log, ln, exp, etc.), so many of these
+ * setup functions are now optional for backward compatibility.
  */
 
 #pragma once
 
 #include <chrono>
 #include <cmath>
+#include <complex>
 #include <functional>
 #include <iomanip>
 #include <iostream>

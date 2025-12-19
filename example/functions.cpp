@@ -1,6 +1,6 @@
 /**
- * @file advanced_usage.cpp
- * @brief Advanced usage patterns for the Modern C++ Calculator library
+ * @file functions.cpp
+ * @brief Function usage patterns for the Modern C++ Calculator library
  *
  * This example demonstrates:
  * - Performance optimization techniques
@@ -25,6 +25,14 @@
 #include <vector>
 
 #include "../calculator.hpp"
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
+#ifndef M_E
+#define M_E 2.71828182845904523536
+#endif
 
 // Forward declarations
 void demonstrate_performance_optimization();
